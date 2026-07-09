@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title><%= title %></title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-black text-gray-300 font-sans antialiased pb-10">
+
+    <nav class="sticky top-0 z-50 bg-neutral-900 border-b border-blue-500 mb-6">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-14">
+                <a href="/" class="flex items-center gap-3">
+                    <div class="bg-blue-500 text-black flex items-center justify-center w-7 h-7 rounded-[5px]">
+                        <i class="fa-solid fa-code text-xs"></i>
+                    </div>
+                    <span class="text-white font-bold text-base tracking-wide border-l border-neutral-700 pl-3">Nonton<span class="text-blue-500">Anime</span></span>
+                </a>
+                <a href="/bookmark" class="text-gray-300 hover:text-blue-500 transition">
+                    <i class="fa-solid fa-bookmark text-lg"></i>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-4xl mx-auto px-4 sm:px-6">
+        <a href="javascript:history.back()" class="inline-flex items-center text-sm font-medium text-blue-500 hover:text-blue-400 mb-4 transition">
+            &larr; Kembali
+        </a>
+        
+        <h1 class="text-lg font-bold mb-4 text-white leading-tight"><%= title %></h1>
+        
+        <div class="w-full aspect-video bg-neutral-900 rounded-[5px] overflow-hidden mb-6 relative border border-neutral-800">
+            <iframe id="videoPlayer" src="<%= iframeSrc %>" class="absolute inset-0 w-full h-full border-0" allowfullscreen></iframe>
+        </div>
+
+        <h2 class="text-lg font-bold mb-3 px-1 text-white border-l-4 border-blue-500 pl-3">Unduhan</h2>
+        <div class="bg-neutral-900 rounded-[5px] border border-neutral-800 p-3 sm:p-4">
+            <div class="space-y-2">
+                <% downloadList.forEach(item => { %>
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between p-2.5 rounded-[5px] bg-black border border-neutral-800">
+                        <span class="text-sm font-bold text-blue-500 mb-2 sm:mb-0 px-1"><%= item.resolution %></span>
+                        <div class="flex flex-wrap gap-1.5">
+                            <% item.links.forEach(link => { %>
+                                <a href="<%= link.url %>" target="_blank" class="px-3 py-1.5 bg-neutral-900 border border-neutral-700 text-gray-300 hover:text-black hover:bg-blue-500 hover:border-blue-500 rounded-[5px] text-[11px] font-bold transition">
+                                    <%= link.provider %>
+                                </a>
+                            <% }) %>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+        </div>
+    </div>
+</body>
+    <script>
+        // Mencatat episode ini sebagai ditonton
+        function markAsWatched() {
+            let watched = JSON.parse(localStorage.getItem('watchedEpisodes')) || [];
+            const currentPath = window.location.pathname;
+            if (!watched.includes(currentPath)) {
+                watched.push(currentPath);
+                localStorage.setItem('watchedEpisodes', JSON.stringify(watched));
+            }
+        }
+        markAsWatched();
+    </script>
+    
+</html>

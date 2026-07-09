@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Kategori - <%= categoryName %></title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-black text-gray-300 font-sans antialiased pb-10">
+
+    <nav class="sticky top-0 z-50 bg-neutral-900 border-b border-blue-500 mb-6">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-14">
+                <a href="/" class="flex items-center gap-3">
+                    <div class="bg-blue-500 text-black flex items-center justify-center w-7 h-7 rounded-[5px]">
+                        <i class="fa-solid fa-code text-xs"></i>
+                    </div>
+                    <span class="text-white font-bold text-base tracking-wide border-l border-neutral-700 pl-3">Nonton<span class="text-blue-500">Anime</span></span>
+                </a>
+                <a href="/bookmark" class="text-gray-300 hover:text-blue-500 transition">
+                    <i class="fa-solid fa-bookmark text-lg"></i>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="flex items-center mb-6">
+            <h1 class="text-lg font-bold text-white capitalize border-l-4 border-blue-500 pl-3">
+                Kategori: <%= categoryName %>
+            </h1>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+            <% if (categoryList && categoryList.length > 0) { %>
+                <% categoryList.forEach(anime => { %>
+                    <a href="<%= anime.link %>" class="group block bg-neutral-900 rounded-[5px] overflow-hidden border border-neutral-800 hover:border-blue-500 transition">
+                        <div class="relative aspect-[3/4] bg-neutral-800">
+                            <img src="<%= anime.image %>" alt="<%= anime.title %>" class="absolute inset-0 w-full h-full object-cover">
+                        </div>
+                        <div class="p-2.5">
+                            <h2 class="text-sm font-semibold text-white line-clamp-2 leading-tight mb-1 group-hover:text-blue-500 transition"><%= anime.title %></h2>
+                        </div>
+                    </a>
+                <% }) %>
+            <% } else { %>
+                <div class="col-span-full py-10 text-center text-gray-500 text-sm">Tidak ada anime dalam kategori ini.</div>
+            <% } %>
+        </div>
+    </div>
+</body>
+</html>
