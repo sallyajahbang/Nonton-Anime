@@ -9,11 +9,34 @@ const httpsAgent = new https.Agent({
 });
 
 const requestConfig = {
+    // Konfigurasi Proxy
+    proxy: {
+        protocol: 'http',
+        host: '208.67.28.29', // Ganti dengan IP Proxy Anda
+        port: 58090,          // Ganti dengan Port Proxy Anda
+        
+        // Hapus tanda komentar pada baris di bawah ini jika proxy Anda memerlukan autentikasi
+        // auth: {
+        //     username: 'USERNAME_PROXY_ANDA',
+        //     password: 'PASSWORD_PROXY_ANDA'
+        // }
+    },
     httpsAgent,
     headers: {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
-        'Accept-Language': 'id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7'
+        'Accept-Language': 'id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7',
+        'Accept-Encoding': 'gzip, deflate, br',
+        'Referer': 'https://google.com/',
+        'Sec-Ch-Ua': '"Not.A/Brand";v="8", "Chromium";v="114", "Google Chrome";v="114"',
+        'Sec-Ch-Ua-Mobile': '?0',
+        'Sec-Ch-Ua-Platform': '"Windows"',
+        'Sec-Fetch-Dest': 'document',
+        'Sec-Fetch-Mode': 'navigate',
+        'Sec-Fetch-Site': 'cross-site',
+        'Sec-Fetch-User': '?1',
+        'Upgrade-Insecure-Requests': '1',
+        'Connection': 'keep-alive'
     }
 };
 
@@ -88,6 +111,10 @@ const searchAnime = async (req, res) => {
         console.error(error);
         res.status(500).send('Terjadi kesalahan saat mencari anime');
     }
+};
+
+const getBookmarkPage = (req, res) => {
+    res.render('bookmark', { title: 'Bookmark Saya' });
 };
 
 const getAnimeDetail = async (req, res) => {
@@ -194,15 +221,10 @@ const getCategoryList = async (req, res) => {
     }
 };
 
-const getBookmarkPage = (req, res) => {
-    // Merender halaman bookmark statis, data akan diisi oleh client-side JS
-    res.render('bookmark', { title: 'Bookmark Saya' });
-};
-
 module.exports = {
     getOngoingAnime,
     searchAnime,
-    getBookmarkPage, // Fungsi baru
+    getBookmarkPage,
     getAnimeDetail,
     getAnimeWatch,
     getCategoryList
